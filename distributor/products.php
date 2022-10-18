@@ -269,7 +269,7 @@
                                     style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
 			<tr>
 				<th> <input type="checkbox" onClick="toggle(this)" /> </th>
-				<th> Code </th>
+				<th> SN </th>
 				<th> Name </th>
 				<th> Price </th>
 				<th> Unit </th>

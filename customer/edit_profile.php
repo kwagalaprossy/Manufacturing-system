@@ -20,6 +20,7 @@
 					else {
 						$phoneErr = $resultValidate_phone;
 					}
+					
 				}
 			if(!empty($_POST['txtRetailerEmail'])) {
 					$emailHolder = $_POST['txtRetailerEmail'];

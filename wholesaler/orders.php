@@ -344,57 +344,17 @@
 			<div class="page-content">
 				<div class="container-fluid">
 					<!-- start page title -->
-					<form action="" method="POST" class="form">
-			Search By: 
-			<div class="input-box">
-			<select name="cmbFilter" id="cmbFilter">
-			<option value="" disabled selected>-- Search By --</option>
-			<option value="id"> Id </option>
-			<option value="retailer"> Retailer </option>
-			<option value="date"> Date </option>
-			<option value="status"> Status </option>
-			<option value="approved"> Approval </option>
-			</select>
-			</div>
-			
-			<div class="input-box"> <input type="text" name="txtId" id="txtId" style="display:none;" /> </div>
-			<div class="input-box">
-			<select name="cmbRetailer" id="cmbRetailer" style="display:none;">
-				<option value="" disabled selected>-- Select Retailer --</option>
-				<?php while($rowSelectRetailer = mysqli_fetch_array($resultSelectRetailer)) { ?>
-				<option value="<?php echo $rowSelectRetailer['retailer_id']; ?>"><?php echo $rowSelectRetailer['area_code']." (".$rowSelectRetailer['area_name'].")"; ?></option>
-				<?php } ?>
-			</select>
-			</div>
-			<div class="input-box"> <input type="text" id="datepicker" name="txtDate" style="display:none;"/> </div>
-			<div class="input-box">
-			<select name="cmbStatus" id="cmbStatus" style="display:none;">
-				<option value="" disabled selected>-- Select Option --</option>
-				<option value="zero"> Pending </option>
-				<option value="1"> Completed </option>
-			</select>
-			</div>
-			<div class="input-box">
-			<select name="cmbApproved" id="cmbApproved" style="display:none;">
-				<option value="" disabled selected>-- Select Option --</option>
-				<option value="zero"> Not Approved </option>
-				<option value="1"> Approved </option>
-			</select>
-			</div>
-			
-			<input type="submit" class="submit_button" value="Search" /> <span class="error_message"> <?php echo $error; ?> </span>
-		</form>
-		<form action="" method="POST" class="form">
+						<form action="" method="POST" class="form">
 		<table class="table table-centered datatable dt-responsive nowrap table-card-list"
                                     style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
-			<tr>
+			<thead>
 				<th> Order ID </th>
 				<th> Retailer </th>
 				<th> Date </th>
 				<th> Approved Status </th>
 				<th> Order Status </th>
 				<th> Details </th>
-			</tr>
+			</thead>
 			<?php $i=1; while($row_selectOrder = mysqli_fetch_array($result_selectOrder)) { ?>
 			<tr>
 			
@@ -537,6 +497,32 @@
 	<script src="assets/js/pages/dashboard.init.js"></script>
 	<!-- App js -->
 	<script src="assets/js/app.js"></script>
+	    <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Responsive examples -->
+    <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <!-- init js -->
+    <script src="assets/js/pages/ecommerce-datatables.init.js"></script>
+    <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+      });
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
 
 </body>
 

@@ -1,30 +1,89 @@
 <?php
-
-include"config.php";
+	include("config.php");
+	include("../validate_data.php");
+	session_start();
+	if(isset($_SESSION['admin_login'])) {
+		if($_SESSION['admin_login'] == true) {
+			$name = $email = $phone = $address = "";
+			$nameErr = $emailErr = $phoneErr = $requireErr = $confirmMessage = "";
+			$nameHolder = $emailHolder = $phoneHolder = $addressHolder = "";
+			if($_SERVER['REQUEST_METHOD'] == "POST") {
+				if(!empty($_POST['txtDistributorName'])) {
+					$nameHolder = $_POST['txtDistributorName'];
+					$resultValidate_name = validate_name($_POST['txtDistributorName']);
+					if($resultValidate_name == 1) {
+						$name = $_POST['txtDistributorName'];
+					}
+					else{
+						$nameErr = $resultValidate_name;
+					}
+				}
+				if(!empty($_POST['txtDistributorEmail'])) {
+					$emailHolder = $_POST['txtDistributorEmail'];
+					$resultValidate_email = validate_email($_POST['txtDistributorEmail']);
+					if($resultValidate_email == 1) {
+						$email = $_POST['txtDistributorEmail'];
+					}
+					else {
+						$emailErr = $resultValidate_email;
+					}
+				}
+				if(!empty($_POST['txtDistributorPhone'])) {
+					$phoneHolder = $_POST['txtDistributorPhone'];
+					$resultValidate_phone = validate_phone($_POST['txtDistributorPhone']);
+					if($resultValidate_phone == 1) {
+						$phone = $_POST['txtDistributorPhone'];
+					}
+					else {
+						$phoneErr = $resultValidate_phone;
+					}
+				}
+				if(!empty($_POST['txtDistributorAddress'])) {
+					$address = $_POST['txtDistributorAddress'];
+					$addressHolder = $_POST['txtDistributorAddress'];
+				}
+				if($name != null && $phone != null && $resultValidate_email ==1) {
+					$query_addDistributor = "INSERT INTO distributor(dist_name,dist_email,dist_phone,dist_address) VALUES('$name','$email','$phone','$address')";
+					if(mysqli_query($con,$query_addDistributor)) {
+						echo "<script> alert(\"Distributor Added Successfully\"); </script>";
+						header('location:distributors.php');
+					}
+					else {
+						$requireErr = "Adding Distributor Failed";
+					}
+				}
+				else {
+					$requireErr = "* Valid Name & Phone Number are compulsory";
+				}
+			}
+		}
+		else {
+			header('Location:../index.php');
+		}
+	}
+	else {
+		header('Location:../index.php');
+	}
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
 	<meta charset="utf-8" />
-	<title>dashboard</title>
+	<title> Add Distributor </title>
+	<link rel="stylesheet" href="style.css" >
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
 	<meta content="Themesbrand" name="author" />
-	<script src="https://kit.fontawesome.com/78e0d6a352.js" crossorigin="anonymous"></script>
 	<!-- App favicon -->
-	<!-- <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
+	<link rel="shortcut icon" href="assets/images/favicon.ico">
 	<!-- Bootstrap Css -->
 	<link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
 	<!-- Icons Css -->
 	<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 	<!-- App Css-->
 	<link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 	<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
-	<link rel="stylesheet" href="style.css" >
-
 </head>
 
 <body>
@@ -156,7 +215,7 @@ include"config.php";
 								</a>
 								<a href="" class="text-reset notification-item">
 									<div class="d-flex align-items-start">
-										<div class="flex-shrink-0 me-3"> <img src="" class="rounded-circle avatar-xs" alt="user-pic"> </div>
+										<div class="flex-shrink-0 me-3"> <img src="assets/images/users/avatar-4.jpg" class="rounded-circle avatar-xs" alt="user-pic"> </div>
 										<div class="flex-grow-1">
 											<h6 class="mb-1">Salena Layfield</h6>
 											<div class="font-size-12 text-muted">
@@ -175,86 +234,96 @@ include"config.php";
 						</div>
 					</div>
 					<div class="dropdown d-inline-block">
-						<button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="#" alt=""> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Manufacturer</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
+						<button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="#" alt="Header Avatar"> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Admin</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
 						<div class="dropdown-menu dropdown-menu-end">
-							<!-- item--><a class="dropdown-item" href="edit_profile.php"><i
+							<!-- item--><a class="dropdown-item" href="#"><i
 									class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span
-									class="align-middle">Edit Profile</span></a> 
-									<a class="dropdown-item" href="logout.php">
-										<i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span
+									class="align-middle">View Profile</span></a> <a class="dropdown-item" href="#">
+										<i
+									class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span
 									class="align-middle">Sign out</span></a>
 						</div>
-						<div class="dropdown d-inline-block">
-							<button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect"> <i class="uil-cog"></i> </button>
-						</div>
+					<div class="dropdown d-inline-block">
+						<button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect"> <i class="uil-cog"></i> </button>
 					</div>
+				</div>
 			</div>
 		</header>
 		<!-- ========== Left Sidebar Start ========== -->
 		<div class="vertical-menu" style="background-color:black ;">
 			<!-- LOGO -->
 			<div class="navbar-brand-box" style="background-color:black ;">
-				<a href="dashboard.php" ><img style="width: 60%;" src="ghj.jpg"> </a>
-				<!-- <h3> M&DS</h3> -->
+				<a href="dashboard.php" ><img style="width: 70%;" src="ghj.jpg"> </a>
+				<h3> M&DS</h3>
 			</div>
 			<button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
-			<div data-simplebar class="sidebar-menu-scroll" style="background-color:black;">
+			<div data-simplebar class="sidebar-menu-scroll" >
 				<!--- Sidemenu -->
 				<div id="sidebar-menu" >
 					<!-- Left Menu Start -->
+			
 					<ul class="metismenu list-unstyled" id="side-menu">
-						
-						
-						
-						
+					
+						<!-- <li>
+							<a href="index.html" class="waves-effect"> <i class="fas fa-dashboard"></i><span>Dashboard</span> </a>
+							
+						</li> -->
+						<br><br>
 						<li>
-							<a href="dashboard.php" > <i class="fas fa-dashboard"></i><span>Dashboard</span> </a>
-							
-						</li>
-							<li>
-							<a href="manage_stock.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>Manage stock</span> </a>
-						</li>
-							<li>
-							<a href="view_unit.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>Manage unit</span> </a>
-							
-						</li>
-							
-						<li>
-							<a href="view_category.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>Manage category</span> </a>
-							
-						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="uil-store"></i><i class="fas fa-shopping-cart fa-3x"></i></i> <span>Products</span> </a>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i><span>Retailers</span> </a>
 							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_product.php">Add Products</a></li>
-								<li><a href="view_products.php">View Products</a></li>
+								<li><a href="add_retailers.php">Add Retailers</a></li>
+								<li><a href="retailers.php">View Retailers</a></li>
 								
 							</ul>
 						</li>
 						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="uil-store"></i><i class="fas fa-shopping-cart fa-3x"></i></i> <span>Distributors</span> </a>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class=" fas fa-solid fa-industry fa-3x"></i> <span>Manufacturers</span> </a>
 							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_distributors.php">Add Distributor</a></li>
+								<li><a href="add_manufacturers.php">Add Manufacturers</a></li>
+								<li><a href="manufacturers.php">View Manufacturers</a></li>
+								
+							</ul>
+						</li>
+						<li>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i> <span>Distributors</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_distributors.php">Add Distributors</a></li>
 								<li><a href="distributors.php">View Distributors</a></li>
 								
 							</ul>
 						</li>
-							
-						
-							
 						<li>
-							<a href="retailers.php" > <i class="uil-store"></i> <i class="fas fa-users fa-3x"></i> <span>Retailers</span> </a>
-							
-							
-						</li>
-						
-						<li>
-							<a href="view_orders.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>Orders</span> </a>
-							
-							
+							<a href="javascript: void(0);" class="has-arrow waves-effect">  <i class="fa-brands fa-product-hunt fa-3x"></i></i> <span>wholesalers</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_wholesaler.php">Add wholesalers</a></li>
+								<li><a href="wholesaler.php">View wholesalers</a></li>
+								
+							</ul>
 						</li>
 						<li>
-							<a href="invoice.php" > <i class="uil-store"></i> <i class="fas fa-file-invoice fa-3x"></i><span>Invoices</span> </a>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i> <span>Customers</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_customers.php">Add Customers</a></li>
+								<li><a href="customers.php">View Customers</a></li>
+								
+							</ul>
+						</li>
+						<li>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fa-brands fa-product-hunt fa-3x"></i></i> <span>Products</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_products.php">Add Products</a></li>
+								<li><a href="products.php">View Products</a></li>
+								
+							</ul>
+						</li>
+
+						<li>
+							<a href="orders.php" ><i class="fas fa-shopping-cart fa-3x"></i> <span>Orders</span> </a>
+							
+						</li>
+						<li>
+							<a href="invoice.php" > <i class="fas fa-file-invoice fa-3x"></i><span>Invoices</span> </a>
 							
 						</li>
 						
@@ -271,161 +340,29 @@ include"config.php";
 			<div class="page-content">
 				<div class="container-fluid">
 					<!-- start page title -->
-					<div class="row">
-						<div class="col-12">
-							<div class="page-title-box d-flex align-items-center justify-content-between">
-								<h4 class="mb-0">Dashboard</h4>
-								
-								</div>
-							</div>
+					<form action="" method="POST" class="form">
+		
+						<div>
+							<div class="label-block"> <label for="distributor:name">Name</label> </div>
+							<div class="input-box"> <input type="text" id="distributor:name" name="txtDistributorName" placeholder="Name" value="<?php echo $nameHolder; ?>" required /> </div> <span class="error_message"><?php echo $nameErr; ?></span>
 						</div>
-					</div>
-					<!-- end page title -->
-					<div class="row">
-						<div class="col-md-6 col-xl-3">
-							<div class="card" style="background-color:aqua;">
-							
-								<div class="card-body">
-									<div class="float-end mt-2">
-										<i class="fas fa-users fa-3x"></i>
-										<?php
-										$querry=mysqli_query($con, "select * from retailer");
-										$total=mysqli_num_rows($querry);
-										
-										?>
-									</div>
-									<div>
-									<h4 class="mb-1 mt-1"><span data-plugin="counterup"><?php echo $total; ?></span></h4>
-										<p class="text-muted mb-0">Retailers</p>
-									</div>
-									
-								</div>
-							</div>
+						<div>
+							<div class="label-block"> <label for="distributor:email">Email</label> </div>
+							<div class="input-box"> <input type="text" id="distributor:email" name="txtDistributorEmail" placeholder="Email" value="<?php echo $emailHolder; ?>" required /> </div> <span class="error_message"><?php echo $emailErr; ?></span>
 						</div>
-						<!-- end col-->
-						
-						<!-- end col-->
-						<div class="col-md-6 col-xl-3">
-							<div class="card" style="background-color:blue;">
-								<div class="card-body">
-									<div class="float-end mt-2">
-										<i class="fas fa-users fa-3x"></i>
-										<?php
-										$querry=mysqli_query($con, "select * from distributor");
-										$total=mysqli_num_rows($querry);
-										
-										?>
-									</div>
-									<div>
-										<h4 class="mb-1 mt-1"><span data-plugin="counterup"><?php echo $total; ?></span></h4>
-										<p class="text-muted mb-0">Distributors</p>
-									</div>
-									
-								</div>
-							</div>
+						<div>
+							<div class="label-block"> <label for="distributor:phone">Phone</label> </div>
+							<div class="input-box"> <input type="text" id="distributor:phone" name="txtDistributorPhone" placeholder="Phone" value="<?php echo $phoneHolder; ?>" /> </div> <span class="error_message"><?php echo $phoneErr; ?></span>
 						</div>
-						<!-- end col-->
-						<div class="col-md-6 col-xl-3">
-							<div class="card" style="background-color:orange;">
-								<div class="card-body">
-									<div class="float-end mt-2">
-										<i class="fas fa-users fa-3x"></i>
-										
-									</div>
-									<div>
-										<h4 class="mb-1 mt-1"> <span data-plugin="counterup"></span></h4>
-										<p class="text-muted mb-0">Customers</p>
-									</div>
-									
-								</div>
-							</div>
+						<div>
+							<div class="label-block"> <label for="distributor:address">Address</label> </div>
+							<div class="input-box"> <textarea type="text" id="distributor:address" name="txtDistributorAddress" placeholder="Address"><?php echo $addressHolder; ?></textarea> </div>
 						</div>
-						<div class="col-md-6 col-xl-3">
-							<div class="card" style="background-color:brown;">
-								<div class="card-body">
-									<div class="float-end mt-2">
-										<i class="fa fa-product-hunt "></i> 
-										<?php
-										$querry=mysqli_query($con, "select * from products");
-										$total=mysqli_num_rows($querry);
-										
-										?>
-									</div>
-									<div>
-										<h4 class="mb-1 mt-1"><span data-plugin="counterup"><?php echo $total; ?></span></h4>
-										<p class="text-muted mb-0">Products</p>
-									</div>
-									
-								</div>
-							</div>
-						<!-- end col-->
-					</div>
-					<!-- end row-->
-					<div class="row">
-						
+						<div>
+							<input type="submit" value="Add Distributor" class="submit_button" /> <span class="error_message"> <?php echo $requireErr; ?> </span><span class="confirm_message"> <?php echo $confirmMessage; ?> </span>
 						</div>
-						<!-- end col-->
-						<div class="col-md-6 col-xl-3">
-							<div class="card" style="background-color:maroon;">
-								<div class="card-body">
-									<div class="float-end mt-2">
-										<i class="fas fa-shopping-cart fa-3x"></i>
-										<?php
-										$querry=mysqli_query($con, "select * from orders");
-										$total=mysqli_num_rows($querry);
-										
-										?>
-									</div>
-									<div>
-										<h4 class="mb-1 mt-1"><span data-plugin="counterup"><?php echo $total; ?></span></h4>
-										<p class="text-muted mb-0">Orders</p>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-						<!-- end col-->
-						<div class="col-md-6 col-xl-3">
-							<div class="card" style="background-color:green;">
-								<div class="card-body">
-									<div class="float-end mt-2">
-										<i class="fas fa-file-invoice fa-3x"></i>
-										<?php
-										$querry=mysqli_query($con, "select * from invoice");
-										$total=mysqli_num_rows($querry);
-										
-										?>
-									</div>
-									<div>
-										<h4 class="mb-1 mt-1"><span data-plugin="counterup"><?php echo $total; ?></span></h4>
-										<p class="text-muted mb-0">Invoices</p>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-						<!-- end col-->
-						<div class="col-md-6 col-xl-3">
-							<div class="card" style="background-color:tan;">
-								<div class="card-body">
-									<div class="float-end mt-2">
-										<i class="fas fa-users fa-3x"></i>
-										<?php
-										$querry=mysqli_query($con, "select * from wholesaler");
-										$total=mysqli_num_rows($querry);
-										
-										?>
-									</div>
-									<div>
-										<h4 class="mb-1 mt-1"><span data-plugin="counterup"><?php echo $total; ?></span></h4>
-										<p class="text-muted mb-0">wholesalers</p>
-									</div>
-									
-								</div>
-							</div>
-						</div>
-						<!-- end col-->
-					</div>
+		
+		             </form>
 					<!-- end row-->
 					
 				<!-- container-fluid -->

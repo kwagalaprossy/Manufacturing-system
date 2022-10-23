@@ -230,7 +230,7 @@ include"config.php";
 						<li>
 							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i> <span>Distributors</span> </a>
 							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_distributors.php">Add Distributors</a></li>
+								
 								<li><a href="distributors.php">View Distributors</a></li>
 								
 							</ul>

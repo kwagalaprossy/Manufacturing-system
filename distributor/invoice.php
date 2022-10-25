@@ -325,6 +325,7 @@
             </div>
         </header>
         <!-- ========== Left Sidebar Start ========== -->
+<<<<<<< HEAD
         <div class="vertical-menu" style="background-color:black ;">
             <!-- LOGO -->
             <div class="navbar-brand-box" style="background-color:black ;">
@@ -346,6 +347,41 @@
                         </li>
                         
                         
+=======
+		<div class="vertical-menu" style="background-color:black ;">
+			<!-- LOGO -->
+			<div class="navbar-brand-box" style="background-color:black;">
+				<a href="dashboard.php" ><img style="width: 60%;" src="ghj.jpg"> </a>
+				<!-- <h3> M&DS</h3> -->
+			</div>
+			<button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
+			<div data-simplebar class="sidebar-menu-scroll" style="background-color:black;">
+				<!--- Sidemenu -->
+				<div id="sidebar-menu" >
+					<!-- Left Menu Start -->
+			
+					<ul class="metismenu list-unstyled" id="side-menu">
+						
+					
+						<li>
+							<a href="dashboard.php" > <i class="fas fa-dashboard"></i><span>Dashboard</span> </a>
+							
+						</li>
+						
+						<li>
+							<a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>Products</span> </a>
+							
+						</li>
+
+						<li>
+							<a href="orders.php" ><i class="fas fa-shopping-cart fa-3x"></i> <span>Orders</span> </a>
+							
+						</li>
+						<li>
+							<a href="invoice.php" > <i class="fas fa-file-invoice fa-3x"></i><span>Invoices</span> </a>
+							
+						</li>
+>>>>>>> 35075c1998dcd668dc772123966e2052ae88e88a
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"> <i class=" fas fa-users fa-3x"></i> <span>Manufacturers</span> </a>
                             <ul class="sub-menu" aria-expanded="false">

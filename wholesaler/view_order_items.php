@@ -286,6 +286,7 @@
 				<th> Quantity </th>
 				<th> Amount </th>
 			</tr>
+			
 			<?php $i=1; while($row_selectManOrderItems = mysqli_fetch_array($result_selectManOrderItems)) { ?>
 			<tr>
 				<td> <?php echo $row_selectManOrderItems['pro_name']; ?> </td>

@@ -1,61 +1,184 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Add Product </title>
+	<link rel="stylesheet" href="../includes/main_style.css" >
+</head>
+<body>
+	<?php
+		include("../includes/header.inc.php");
+		include("../includes/nav_admin.inc.php");
+		include("../includes/aside_admin.inc.php");
+	?>
+	<section>
+		<h1>Edit Product</h1>
+		<form action="" method="POST" class="form">
+		<ul class="form-list">
+		<li>
+			<div class="label-block"> <label for="product:name">Product Name</label> </div>
+			<div class="input-box"> <input type="text" id="product:name" name="txtProductName" placeholder="Product Name" value="<?php echo $row_selectProductDetails['pro_name']; ?>" required /> </div> <span class="error_message"><?php echo $nameErr; ?></span>
+		</li>
+		<li>
+			<div class="label-block"> <label for="product:price">Price</label> </div>
+			<div class="input-box"> <input type="text" id="product:price" name="txtProductPrice" placeholder="Price" value="<?php echo $row_selectProductDetails['pro_price']; ?>" required /> </div> <span class="error_message"><?php echo $priceErr; ?></span>
+		</li>
+		<li>
+		<div class="label-block"> <label for="product:unit">Unit Type</label> </div>
+		<div class="input-box">
+		<select name="cmbProductUnit" id="product:unit">
+			<option value="" disabled selected>--- Select Unit ---</option>
+			<?php while($row_selectUnit = mysqli_fetch_array($result_selectUnit)) { ?>
+			<option value="<?php echo $row_selectUnit["id"]; ?>" <?php if($row_selectProductDetails['unit'] == $row_selectUnit["id"]){echo "selected";} ?>> <?php echo $row_selectUnit["unit_name"]; ?> </option>
+			<?php } ?>
+		</select>
+		</div>
+		</li>
+		<li>
+		<div class="label-block"> <label for="product:category">Category</label> </div>
+		<div class="input-box">
+		<select name="cmbProductCategory" id="product:category">
+			<option value="" disabled selected>--- Select Category ---</option>
+			<?php while($row_selectCategory = mysqli_fetch_array($result_selectCategory)) { ?>
+			<option value="<?php echo $row_selectCategory["cat_id"]; ?>" <?php if($row_selectProductDetails['pro_cat'] == $row_selectCategory["cat_id"]){echo "selected";} ?>> <?php echo $row_selectCategory["cat_name"]; ?> </option>
+			<?php } ?>
+		</select>
+		</div>
+		</li>
+		<li>
+			<div class="label-block"> <label for="product:stock">Stock Management</label> </div>
+			<input type="radio" name="rdbStock" value="1">Enable
+			<input type="radio" name="rdbStock" value="2">Disable
+		</li>
+		<li>
+			<div class="label-block"> <label for="product:description">Description</label> </div>
+			<div class="input-box"> <textarea type="text" id="product:description" name="txtProductDescription" placeholder="Description"><?php echo $row_selectProductDetails['pro_desc']; ?></textarea> </div>
+		</li>
+		<li>
+			<input type="submit" value="Update Product" class="submit_button" /> <span class="error_message"> <?php echo $requireErr; ?> </span><span class="confirm_message"> <?php echo $confirmMessage; ?> </span>
+		</li>
+		</ul>
+		</form>
+	</section>
+	<?php
+		include("../includes/footer.inc.php");
+	?>
+</body>
+</html>
 <?php
-	include("config.php");
+	include("../config.php");
+	include("../validate_data.php");
 	session_start();
-	if(isset($_SESSION['distributor_login'])) {
-			$query_selectProducts = "SELECT * FROM products,categories,unit WHERE products.pro_cat=categories.cat_id AND products.unit=unit.id ORDER BY pro_id";
-			$result_selectProducts = mysqli_query($con,$query_selectProducts);
+	if(isset($_SESSION['admin_login'])) {
+		if($_SESSION['admin_login'] == true) {
+			$id = $_GET['id'];
+			$query_selectProductDetails = "SELECT * FROM products WHERE pro_id='$id'";
+			$result_selectProductDetails = mysqli_query($con,$query_selectProductDetails);
+			$row_selectProductDetails = mysqli_fetch_array($result_selectProductDetails);
+			$query_selectCategory = "SELECT cat_id,cat_name FROM categories";
+			$query_selectUnit = "SELECT id,unit_name FROM unit";
+			$result_selectCategory = mysqli_query($con,$query_selectCategory);
+			$result_selectUnit = mysqli_query($con,$query_selectUnit);
+			$name = $price = $unit = $category = $description = "";
+			$nameErr = $priceErr = $requireErr = $confirmMessage = "";
+			$nameHolder = $priceHolder = $descriptionHolder = "";
 			if($_SERVER['REQUEST_METHOD'] == "POST") {
-				if(isset($_POST['chkId'])) {
-					$chkId = $_POST['chkId'];
-					foreach($chkId as $id) {
-						$query_deleteProduct = "DELETE FROM products WHERE pro_id='$id'";
-						$result = mysqli_query($con,$query_deleteProduct);
+				if(!empty($_POST['txtProductName'])) {
+					$nameHolder = $_POST['txtProductName'];
+					$name = $_POST['txtProductName'];
+				}
+				if(!empty($_POST['txtProductPrice'])) {
+					$priceHolder = $_POST['txtProductPrice'];
+					$resultValidate_price = validate_price($_POST['txtProductPrice']);
+					if($resultValidate_price == 1) {
+						$price = $_POST['txtProductPrice'];
 					}
-					if(!$result) {
-						echo "<script> alert(\"Can not delete the product which has been order by retailer\"); </script>";
+					else {
+						$priceErr = $resultValidate_price;
+					}
+				}
+				if(isset($_POST['cmbProductUnit'])) {
+					$unit = $_POST['cmbProductUnit'];
+				}
+				if(isset($_POST['cmbProductCategory'])) {
+					$category = $_POST['cmbProductCategory'];
+				}
+				if(empty($_POST['rdbStock'])) {
+					$rdbStock = "";
+				}
+				else {
+					if($_POST['rdbStock'] == 1) {
+						$rdbStock = 1;
+					}
+					else if($_POST['rdbStock'] == 2) {
+						$rdbStock = 2;
+					}
+				}
+				if(!empty($_POST['txtProductDescription'])) {
+					$description = $_POST['txtProductDescription'];
+					$descriptionHolder = $_POST['txtProductDescription'];
+				}
+				if($name != null && $price != null && $unit != null && $category != null && $rdbStock == 1) {
+					$rdbStock = 0;
+					$query_UpdateProduct = "UPDATE products SET pro_name='$name',pro_desc='$description',pro_price='$price',unit='$unit',pro_cat='$category',quantity='$rdbStock' WHERE pro_id='$id'";
+					if(mysqli_query($con,$query_UpdateProduct)) {
+						echo "<script> alert(\"Product Updated Successfully\"); </script>";
+						header('Refresh:0;url=view_products.php');
+					}
+					else {
+						$requireErr = "Updating Product Failed";
+					}
+				}
+				else if($name != null && $price != null && $unit != null && $category != null && $rdbStock == 2) {
+						$query_UpdateProduct = "UPDATE products SET pro_name='$name',pro_desc='$description',pro_price='$price',unit='$unit',pro_cat='$category',quantity=NULL WHERE pro_id='$id'";
+					if(mysqli_query($con,$query_UpdateProduct)) {
+						echo "<script> alert(\"Product Updated Successfully\"); </script>";
 						header('Refresh:0');
 					}
 					else {
-						echo "<script> alert(\"Products Deleted Successfully\"); </script>";
-						header('Refresh:0');
+						$requireErr = "Updating Product Failed";
 					}
+				}
+				else {
+					$requireErr = "* All Fields are Compulsory with valid values except Description";
 				}
 			}
 		}
 		else {
 			header('Location:../index.php');
 		}
+	}
+	else {
+		header('Location:../index.php');
+	}
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
 	<meta charset="utf-8" />
-	<title>products</title>
+	<title>scm</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
 	<meta content="Themesbrand" name="author" />
+	<script src="https://kit.fontawesome.com/78e0d6a352.js" crossorigin="anonymous"></script>
 	<!-- App favicon -->
-	<!-- <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
+	<link rel="shortcut icon" href="assets/images/favicon.ico">
 	<!-- Bootstrap Css -->
 	<link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
 	<!-- Icons Css -->
 	<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 	<!-- App Css-->
 	<link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 	<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
-	<script language="JavaScript">
-	function toggle(source) {
-		checkboxes = document.getElementsByName('chkId[]');
-		for(var i=0, n=checkboxes.length;i<n;i++) {
-			checkboxes[i].checked = source.checked;
-		}
-	}
-	</script>
+	<link rel="stylesheet" href="style.css" >
+
 </head>
 
 <body>
-
 	<!-- <body data-layout="horizontal" data-topbar="colored"> -->
 	<!-- Begin page -->
 	<div id="layout-wrapper">
@@ -71,7 +194,7 @@
                         
                         
 					</div>
-					<button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
+					<button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars" id="toggle"></i> </button>
 					<!-- App Search-->
 					<form class="app-search d-none d-lg-block">
 						<div class="position-relative">
@@ -184,7 +307,7 @@
 								</a>
 								<a href="" class="text-reset notification-item">
 									<div class="d-flex align-items-start">
-										<div class="flex-shrink-0 me-3"> <img src="assets/images/users/avatar-4.jpg" class="rounded-circle avatar-xs" alt="user-pic"> </div>
+										<div class="flex-shrink-0 me-3"> <img src="" class="rounded-circle avatar-xs" alt="user-pic"> </div>
 										<div class="flex-grow-1">
 											<h6 class="mb-1">Salena Layfield</h6>
 											<div class="font-size-12 text-muted">
@@ -203,10 +326,15 @@
 						</div>
 					</div>
 					<div class="dropdown d-inline-block">
-						<button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="#" alt="Header Avatar"> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Distributor</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
+						<button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="#" alt=""> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Admin</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
 						<div class="dropdown-menu dropdown-menu-end">
-							<!-- item--><a class="dropdown-item" href="#"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">View Profile</span></a> <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">My Wallet</span></a> <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Settings</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a> <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Lock screen</span></a> <a class="dropdown-item" href="#"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a> </div>
-					</div>
+							<!-- item--><a class="dropdown-item" href="#"><i
+									class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span
+									class="align-middle">View Profile</span></a> 
+									<a class="dropdown-item" href="logout.php">
+										<i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span
+									class="align-middle">Sign out</span></a>
+						</div>
 					<div class="dropdown d-inline-block">
 						<button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect"> <i class="uil-cog"></i> </button>
 					</div>
@@ -221,7 +349,7 @@
 				<!-- <h3> M&DS</h3> -->
 			</div>
 			<button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
-			<div data-simplebar class="sidebar-menu-scroll" style="background-color:black;">
+			<div data-simplebar class="sidebar-menu-scroll" >
 				<!--- Sidemenu -->
 				<div id="sidebar-menu" >
 					<!-- Left Menu Start -->
@@ -233,11 +361,55 @@
 							<a href="dashboard.php" > <i class="fas fa-dashboard"></i><span>Dashboard</span> </a>
 							
 						</li>
+						
 						<li>
-							<a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>products</span> </a>
-							
+							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i><span>Retailers</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_retailers.php">Add Retailers</a></li>
+								<li><a href="retailers.php">View Retailers</a></li>
+								
+							</ul>
 						</li>
-				
+						<li>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class=" fas fa-users fa-3x"></i> <span>Manufacturers</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_manufacturers.php">Add Manufacturers</a></li>
+								<li><a href="manufacturers.php">View Manufacturers</a></li>
+								
+							</ul>
+						</li>
+						<li>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i> <span>Distributors</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_distributors.php">Add Distributors</a></li>
+								<li><a href="distributors.php">View Distributors</a></li>
+								
+							</ul>
+						</li>
+						<li>
+							<a href="javascript: void(0);" class="has-arrow waves-effect">  <i class="fas fa-users fa-3x"></i></i> <span>wholesalers</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_wholesaler.php">Add wholesalers</a></li>
+								<li><a href="wholesaler.php">View wholesalers</a></li>
+								
+							</ul>
+						</li>
+						<li>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i> <span>Customers</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_customers.php">Add Customers</a></li>
+								<li><a href="customers.php">View Customers</a></li>
+								
+							</ul>
+						</li>
+						<li>
+							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fa-brands fa-product-hunt fa-3x"></i></i> <span>Products</span> </a>
+							<ul class="sub-menu" aria-expanded="false">
+								<li><a href="add_products.php">Add Products</a></li>
+								<li><a href="products.php">View Products</a></li>
+								
+							</ul>
+						</li>
 
 						<li>
 							<a href="orders.php" ><i class="fas fa-shopping-cart fa-3x"></i> <span>Orders</span> </a>
@@ -247,11 +419,8 @@
 							<a href="invoice.php" > <i class="fas fa-file-invoice fa-3x"></i><span>Invoices</span> </a>
 							
 						</li>
-						<li>
-							<a href="expense.php" > <i class="fas fa-file-invoice fa-3x"></i><span>Expenses</span> </a>
-							
-						</li>
-
+						
+					</ul>
 				</div>
 				<!-- Sidebar -->
 			</div>
@@ -264,33 +433,52 @@
 			<div class="page-content">
 				<div class="container-fluid">
 					<!-- start page title -->
-					<form action="" method="POST" class="form">
-					<table class="table table-centered datatable dt-responsive nowrap table-card-list"
-                                    style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
-			<tr>
-				<th> <input type="checkbox" onClick="toggle(this)" /> </th>
-				<th> SN </th>
-				<th> Name </th>
-				<th> Price </th>
-				<th> Unit </th>
-				<th> Category </th>
-				<th> Quantity </th>
-				<th> Edit </th>
-			</tr>
-			<?php $i=1; while($row_selectProducts = mysqli_fetch_array($result_selectProducts)) { ?>
-			<tr>
-				<td> <input type="checkbox" name="chkId[]" value="<?php echo $row_selectProducts['pro_id']; ?>" /> </td>
-				<td> <?php echo $row_selectProducts['pro_id']; ?> </td>
-				<td> <?php echo $row_selectProducts['pro_name']; ?> </td>
-				<td> <?php echo $row_selectProducts['pro_price']; ?> </td>
-				<td> <?php echo $row_selectProducts['unit_name']; ?> </td>
-				<td> <?php echo $row_selectProducts['cat_name']; ?> </td>
-				<td> <?php if($row_selectProducts['quantity'] == NULL){ echo "N/A";} else {echo $row_selectProducts['quantity'];} ?> </td>
-				<td> <a href="edit_product.php?id=<?php echo $row_selectProducts['pro_id']; ?>"><img src="../images/edit.png" alt="edit" /></a> </td>
-			</tr>
-			<?php $i++; } ?>
-		</table>
-		<input type="submit" value="Delete" class="submit_button"/>
+					<h1>Edit Product</h1>
+		<form action="" method="POST" class="form">
+		<ul class="form-list">
+		<li>
+			<div class="label-block"> <label for="product:name">Product Name</label> </div>
+			<div class="input-box"> <input type="text" id="product:name" name="txtProductName" placeholder="Product Name" value="<?php echo $row_selectProductDetails['pro_name']; ?>" required /> </div> <span class="error_message"><?php echo $nameErr; ?></span>
+		</li>
+		<li>
+			<div class="label-block"> <label for="product:price">Price</label> </div>
+			<div class="input-box"> <input type="text" id="product:price" name="txtProductPrice" placeholder="Price" value="<?php echo $row_selectProductDetails['pro_price']; ?>" required /> </div> <span class="error_message"><?php echo $priceErr; ?></span>
+		</li>
+		<li>
+		<div class="label-block"> <label for="product:unit">Unit Type</label> </div>
+		<div class="input-box">
+		<select name="cmbProductUnit" id="product:unit">
+			<option value="" disabled selected>--- Select Unit ---</option>
+			<?php while($row_selectUnit = mysqli_fetch_array($result_selectUnit)) { ?>
+			<option value="<?php echo $row_selectUnit["id"]; ?>" <?php if($row_selectProductDetails['unit'] == $row_selectUnit["id"]){echo "selected";} ?>> <?php echo $row_selectUnit["unit_name"]; ?> </option>
+			<?php } ?>
+		</select>
+		</div>
+		</li>
+		<li>
+		<div class="label-block"> <label for="product:category">Category</label> </div>
+		<div class="input-box">
+		<select name="cmbProductCategory" id="product:category">
+			<option value="" disabled selected>--- Select Category ---</option>
+			<?php while($row_selectCategory = mysqli_fetch_array($result_selectCategory)) { ?>
+			<option value="<?php echo $row_selectCategory["cat_id"]; ?>" <?php if($row_selectProductDetails['pro_cat'] == $row_selectCategory["cat_id"]){echo "selected";} ?>> <?php echo $row_selectCategory["cat_name"]; ?> </option>
+			<?php } ?>
+		</select>
+		</div>
+		</li>
+		<li>
+			<div class="label-block"> <label for="product:stock">Stock Management</label> </div>
+			<input type="radio" name="rdbStock" value="1">Enable
+			<input type="radio" name="rdbStock" value="2">Disable
+		</li>
+		<li>
+			<div class="label-block"> <label for="product:description">Description</label> </div>
+			<div class="input-box"> <textarea type="text" id="product:description" name="txtProductDescription" placeholder="Description"><?php echo $row_selectProductDetails['pro_desc']; ?></textarea> </div>
+		</li>
+		<li>
+			<input type="submit" value="Update Product" class="submit_button" /> <span class="error_message"> <?php echo $requireErr; ?> </span><span class="confirm_message"> <?php echo $confirmMessage; ?> </span>
+		</li>
+		</ul>
 		</form>
 					
 				<!-- container-fluid -->

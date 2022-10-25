@@ -336,7 +336,7 @@
 						</li>
 						
 						<li>
-							<a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>products</span> </a>
+							<a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>Products</span> </a>
 							
 						</li>
 

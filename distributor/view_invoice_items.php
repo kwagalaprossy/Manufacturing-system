@@ -270,7 +270,7 @@
 						</li>
 						
 						<li>
-							<a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>products</span> </a>
+							<a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>Products</span> </a>
 							
 						</li>
 
@@ -324,7 +324,7 @@
 							<form action="" method="POST" class="form">
 							<table class="table_invoiceFormat" style="margin-top:50px;">
 								<tr style="background-color:aqua;">
-									<th style="padding-right:25px;"> Sr. No. </th>
+									<th style="padding-right:25px;"> Sr. No.</th>
 									<th style="padding-right:150px;"> Products </th>
 									<th style="padding-right:30px;"> Unit Price </th>
 									<th style="padding-right:30px;"> Quantity </th>

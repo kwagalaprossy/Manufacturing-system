@@ -344,7 +344,7 @@
 						<li>
 							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class="uil-store"></i> <span>Products</span> </a>
 							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="manpro.php">Manage Products</a></li>
+								<li><a href="manpro.php">View Products</a></li>
 								<li><a href="pro.php">Add Products</a></li>
 								
 							</ul>
@@ -388,7 +388,7 @@
 										<div class="mb-3">
 											<label class="form-label">buying price</label>
 											<div>
-												<input type="text" class="form-control"id="wholesaler:password" name="bp" placeholder="Buying price" required/>
+												<input type="text" class="form-control"id="wholesaler:password" name="bp" placeholder="Buying price">
 												<span class="error_message"><?php// echo $buying_priceErr; ?></span>
 											</div>
 											

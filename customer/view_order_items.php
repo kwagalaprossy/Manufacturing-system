@@ -73,7 +73,7 @@
 				<?php
 					mysqli_data_seek($result_selectOrderItems,0);
 					$row_selectOrderItems = mysqli_fetch_array($result_selectOrderItems);
-					echo $row_selectOrderItems['total_amount'];
+					echo $row_selectOrderItems   ['total_amount'];
 				?>
 				</td>
 			</tr>

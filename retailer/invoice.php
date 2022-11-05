@@ -107,10 +107,20 @@
     <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+       <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+</head>
+<!-- DataTables -->
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
     <!-- Responsive datatable examples -->
     <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
         type="text/css" />
+
 </head>
 
 <body>
@@ -415,42 +425,48 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-
                             <div class="table-responsive mb-4">
-                                <table class="table table-centered datatable dt-responsive nowrap table-card-list"
-                                    style="border-collapse: collapse; border-spacing: 0 12px; width: 95%;">
+                                    <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                        <thead>
+                                            <tr class="bg-transparent">
+                                                <th style="width: 20px;">
+                                                    <div class="form-check text-center">
+                                                        <input type="checkbox" class="form-check-input" id="customercheck">
+                                                        <label class="form-check-label" for="customercheck"></label>
+                                                    </div>
+                                                </th>
+                                                
+                                        <th> Invoice ID </th>
+                                        <th> Retailer </th>
+                                        <th> Date </th>
+                                        <th> Order ID </th>
+                                        <th> Total Amount </th>
+                                        <th> Details </th>
+                                        <!-- <th>Action</th> -->
                                     
-                                    <thead>
-									<tr>
-										<th> Invoice ID </th>
-										<th> Retailer </th>
-										<th> Date </th>
-										<th> Order ID </th>
-										<th> Total Amount </th>
-										<th> Details </th>
-										<!-- <th>Action</th> -->
-									</tr>
-                                    </thead>
-                                    
-                                    <?php while($row_selectInvoice = mysqli_fetch_array($result_selectInvoice)) { ?>
-                                    
-                                    <tbody>                                      
-										<td> <?php echo $row_selectInvoice['invoice_id']; ?> </td>
-										<td> <?php echo $row_selectInvoice['area_code']; ?> </td>
-										
-										<td> <?php echo date("d-m-Y",strtotime($row_selectInvoice['date'])); ?> </td>
-										<td> <?php echo $row_selectInvoice['order_id']; ?> </td>
-										<td> <?php echo $row_selectInvoice['total_amount']; ?> </td>
-										<td> <a href="view_invoice_items.php?id=<?php echo $row_selectInvoice['invoice_id']; ?>">Details</a> </td>
-										<!-- <td>
-                                            <a href=""><i class='fas fa-edit' style='padding: 5px;'></i></a>
-                                            <a href=""><i class='fas fa-eye' style='padding: 5px;'></i></a>
-                                            <a href=""><i class='fas fa-trash' style='padding: 5px;'></i></a>
-                                        </td> -->
-                                    </tbody>
-                                    <?php } ?>
-                                </table>
-                            </div>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             <?php while($row_selectInvoice = mysqli_fetch_array($result_selectInvoice)) { ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check text-center">
+                                                        <input type="checkbox" class="form-check-input" id="customercheck2">
+                                                        <label class="form-check-label" for="customercheck2"></label>
+                                                    </div>
+                                                </td>
+                                                <td> <?php echo $row_selectInvoice['invoice_id']; ?> </td>
+                                        <td> <?php echo $row_selectInvoice['area_code']; ?> </td>
+                                        
+                                        <td> <?php echo date("d-m-Y",strtotime($row_selectInvoice['date'])); ?> </td>
+                                        <td> <?php echo $row_selectInvoice['order_id']; ?> </td>
+                                        <td> <?php echo $row_selectInvoice['total_amount']; ?> </td>
+                                        <td> <a href="view_invoice_items.php?id=<?php echo $row_selectInvoice['invoice_id']; ?>">Details</a> </td>
+                                                
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                         </div>
                     </div>
                     <!-- end row -->
@@ -542,6 +558,23 @@
 
     <!-- init js -->
     <script src="assets/js/pages/ecommerce-datatables.init.js"></script>
+    <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+      });
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
 </body>
 
 </html>

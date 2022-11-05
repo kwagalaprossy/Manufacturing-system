@@ -20,12 +20,12 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>scm</title>
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <!-- <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
     <!-- Bootstrap Css -->
     <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -34,6 +34,18 @@
     <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+        <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+<!-- DataTables -->
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
     <!-- Responsive datatable examples -->
     <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
@@ -244,8 +256,8 @@
         <!-- ========== Left Sidebar Start ========== -->
         <div class="vertical-menu">
             <!-- LOGO -->
-            <div class="navbar-brand-box">
-                
+            <div class="navbar-brand-box" style="background-color:black ;">
+                                <a href="dashboard.php" ><img style="width: 60%;" src="ghj.jpg"> </a>
             </div>
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
             <div data-simplebar class="sidebar-menu-scroll" style="background-color:black ;">
@@ -319,12 +331,10 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-
                             <div class="table-responsive mb-4">
-                                <table class="table table-centered datatable dt-responsive nowrap table-card-list"
-                                    style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                    <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
                                     
-                                    <tr>
+                                    <thead>
                                         <th> ID </th>
                                         <th> Name </th>
                                         <th> buying Price </th>
@@ -332,8 +342,10 @@
                                         <th> profit </th>
                                         <th> Unit </th>
                                         <th> Category </th>
+                                        <th> Quantity </th>
 
-                                    </tr>
+
+                                    </thead>
                                     
                                     <?php while($row_selectProducts = mysqli_fetch_array($result_selectProducts)) { ?>
                                     
@@ -358,6 +370,7 @@
                                             ?></td>
                                             <td> <?php echo $row_selectProducts['unit']; ?> </td>
                                             <td> <?php echo $row_selectProducts['pro_cat']; ?> </td>
+                                            <td> <?php echo $row_selectProducts['quantity']; ?> </td>
 			
                                             <!-- <a href=""><i class='fas fa-edit' style='padding: 5px;'></i></a>
                                             <a href=""><i class='fas fa-eye' style='padding: 5px;'></i></a>
@@ -459,6 +472,28 @@
 
     <!-- init js -->
     <script src="assets/js/pages/ecommerce-datatables.init.js"></script>
+    <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+
+    <!-- init js -->
+    <script src="assets/js/pages/ecommerce-datatables.init.js"></script>
+    <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+      });
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
 </body>
 
 </html>

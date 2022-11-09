@@ -382,7 +382,7 @@
                                 </table>
                               <!--   <button class="btn btn-primary" onclick="tableToCSV()">
                                 Export to CSV</button> -->
-                                <button type="button" onclick="exportTableToCSV('products.csv')" class="btn btn-primary" style="padding-bottom: 5px; float:left;"><i class="fa fa-download" style=" padding:5px;"></i>Export to Csv</button>
+                                <button type="button" onclick="exportTableToCSV('products.csv')" class="btn btn-danger" style="padding-bottom: 5px; float:left;"><i class="fa fa-download" style=" padding:5px;"></i>Export to Csv</button>
                             </div>
                         </div>
                     </div>
@@ -479,8 +479,8 @@
     <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
     <!-- init js -->
-    <script src="assets/js/pages/ecommerce-datatables.init.js"></script>
-   <!--  <script>
+   <script src="assets/js/pages/ecommerce-datatables.init.js"></script>
+     <!--<script>
     $(function () {
       $("#example1").DataTable({
         "responsive": true,

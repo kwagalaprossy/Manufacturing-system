@@ -175,7 +175,7 @@ include"config.php";
 						</div>
 					</div>
 					<div class="dropdown d-inline-block">
-						<button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="#" alt=""> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Admin</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
+						<button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="#" alt=""> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">customer</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
 						<div class="dropdown-menu dropdown-menu-end">
 							<!-- item--><a class="dropdown-item" href="#"><i
 									class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span
@@ -210,65 +210,23 @@ include"config.php";
 							<a href="dashboard.php" > <i class="fas fa-dashboard"></i><span>Dashboard</span> </a>
 							
 						</li>
-						
 						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i><span>Retailers</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_retailers.php">Add Retailers</a></li>
-								<li><a href="retailers.php">View Retailers</a></li>
-								
-							</ul>
+							<a href="edit_profile.php" > <i class="fas fa-users fa-3x"></i> <i class="fas fa-users fa-3x"></i> <span>Edit profile</span> </a>
+							
 						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class=" fas fa-users fa-3x"></i> <span>Manufacturers</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_manufacturers.php">Add Manufacturers</a></li>
-								<li><a href="manufacturers.php">View Manufacturers</a></li>
-								
-							</ul>
+							
+							<li>
+							<a href="view_products.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>View products</span> </a>
+							
 						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i> <span>Distributors</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_distributors.php">Add Distributors</a></li>
-								<li><a href="distributors.php">View Distributors</a></li>
-								
-							</ul>
+							
 						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect">  <i class="fas fa-users fa-3x"></i></i> <span>wholesalers</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_wholesaler.php">Add wholesalers</a></li>
-								<li><a href="wholesaler.php">View wholesalers</a></li>
-								
-							</ul>
-						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i> <span>Customers</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_customers.php">Add Customers</a></li>
-								<li><a href="customers.php">View Customers</a></li>
-								
-							</ul>
-						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fa-brands fa-product-hunt fa-3x"></i></i> <span>Products</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_products.php">Add Products</a></li>
-								<li><a href="products.php">View Products</a></li>
-								
-							</ul>
-						</li>
+                        <li>
+                            <a href="view_my_orders.php"> <i class="uil-store"></i> <span>Orders</span> </a>
 
-						<li>
-							<a href="orders.php" ><i class="fas fa-shopping-cart fa-3x"></i> <span>Orders</span> </a>
-							
-						</li>
-						<li>
-							<a href="invoice.php" > <i class="fas fa-file-invoice fa-3x"></i><span>Invoices</span> </a>
-							
-						</li>
+                        </li>
 						
+	
 					</ul>
 				</div>
 				<!-- Sidebar -->

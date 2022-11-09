@@ -166,9 +166,9 @@
 						</div>
 					</div>
 					<div class="dropdown d-inline-block">
-						<button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="#" alt="Header Avatar"> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Admin</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
+						<button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="#" alt="Header Avatar"> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">customer</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
 						<div class="dropdown-menu dropdown-menu-end">
-							<!-- item--><a class="dropdown-item" href="#"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">View Profile</span></a> <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">My Wallet</span></a> <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Settings</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a> <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Lock screen</span></a> <a class="dropdown-item" href="#"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a> </div>
+							<!-- item--><a class="dropdown-item" href="edit_profile.php"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">edit Profile</span></a> <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">My Wallet</span></a> <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Settings</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a> <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Lock screen</span></a> <a class="dropdown-item" href="#"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a> </div>
 					</div>
 					<div class="dropdown d-inline-block">
 						<button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect"> <i class="uil-cog"></i> </button>
@@ -197,53 +197,29 @@
 						</li>
 						
 						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class="uil-store"></i> <span>Retailers</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_retailers.php">Add Retailers</a></li>
-								<li><a href="retailers.php">View Retailers</a></li>
-								
-							</ul>
-						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class="uil-store"></i> <span>Manufacturers</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_manufacturers.php">Add Manufacturers</a></li>
-								<li><a href="manufacturers.php">View Manufacturers</a></li>
-								
-							</ul>
-						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class="uil-store"></i> <span>Distributors</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_distributors.php">Add Distributors</a></li>
-								<li><a href="distributors.php">View Distributors</a></li>
-								
-							</ul>
-						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class="uil-store"></i> <span>Customers</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_customers.php">Add Customers</a></li>
-								<li><a href="customers.php">View Customers</a></li>
-								
-							</ul>
-						</li>
-						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class="uil-store"></i> <span>Products</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_products.php">Add Products</a></li>
-								<li><a href="products.php">View Products</a></li>
-								
-							</ul>
-						</li>
-						<li>
-							<a href="orders.php" > <i class="uil-store"></i> <span>Orders</span> </a>
+							<a href="edit_profile.php" > <i class="fas fa-users fa-3x"></i> <i class="fas fa-users fa-3x"></i> <span>Edit profile</span> </a>
 							
 						</li>
-						<li>
-							<a href="invoice.php" > <i class="uil-store"></i> <span>Invoices</span> </a>
+							
+							<li>
+							<a href="view_products.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>View products</span> </a>
 							
 						</li>
+							
+						</li>
+                        <li>
+                            <a href="view_my_orders.php"> <i class="uil-store"></i> <span>Orders</span> </a>
+
+                        </li>
+								
+								
+							</ul>
+						</li>
+						<li>
+							<a href="view_my_orders.php" > <i class="uil-store"></i> <span>Orders</span> </a>
+							
+						</li>
+						
 						
 					</ul>
 				</div>

@@ -262,35 +262,18 @@
 							<a href="edit_profile.php" > <i class="fas fa-users fa-3x"></i> <i class="fas fa-users fa-3x"></i> <span>Edit profile</span> </a>
 							
 						</li>
-							<li>
-							<a href="manage_stock.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>Manage stock</span> </a>
-						</li>
-							<li>
-							<a href="view_unit.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>Manage unit</span> </a>
 							
-						</li>
-							
-						<li>
-							<a href="view_category.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>Manage category</span> </a>
-							
-						</li>
 							<li>
 							<a href="view_products.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>View products</span> </a>
 							
 						</li>
-							<li>
-							<a href="add_product.php" > <i class="uil-store"></i> <i class="fas fa-shopping-cart fa-3x"></i> <span>Add Product</span> </a>
 							
 						</li>
-						</li>
                         <li>
-                            <a href="orders.php"> <i class="uil-store"></i> <span>Orders</span> </a>
+                            <a href="view_my_orders.php"> <i class="uil-store"></i> <span>Orders</span> </a>
 
                         </li>
-                        <li>
-                            <a href="invoice.php"> <i class="uil-store"></i> <span>Invoices</span> </a>
-
-                        </li>
+                        
 
                     </ul>
                 </div>

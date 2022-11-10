@@ -140,7 +140,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="d-flex">
+               <!--  <div class="d-flex">
                     <div class="dropdown d-inline-block d-lg-none ms-2">
                         <button type="button" class="btn header-item noti-icon waves-effect"
                             id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -161,7 +161,7 @@
                             </form>
                         </div>
                     </div>
-
+ -->
                     <div class="dropdown d-none d-lg-inline-block ms-1">
                         <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"> <i class="uil-apps"></i> </button>

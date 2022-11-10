@@ -120,6 +120,20 @@
 	<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 	<!-- App Css-->
 	<link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+
+
+ <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Responsive datatable examples -->
+    <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
+	
 	<script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
 	<script>
   $(function() {
@@ -152,9 +166,11 @@
 					<button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
 					<!-- App Search-->
 					<form class="app-search d-none d-lg-block">
-						<div class="position-relative">
-							<input type="text" class="form-control" placeholder="Search..."> <span class="uil-search"></span> </div>
-					</form>
+                        <div class="position-relative">
+                            <input type="text" class="form-control" placeholder="Search..."> <span
+                                class="uil-search"></span>
+                        </div>
+                    </form>
 				</div>
 				<div class="d-flex">
 					<div class="dropdown d-inline-block d-lg-none ms-2">

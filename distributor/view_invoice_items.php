@@ -230,7 +230,7 @@
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img
-                                class="rounded-circle header-profile-user" src="#" alt="Header Avatar"> <span
+                                class="rounded-circle header-profile-user" src="images/ava.png" alt="Header Avatar"> <span
                                 class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Distributor</span> <i
                                 class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
                         <div class="dropdown-menu dropdown-menu-end">

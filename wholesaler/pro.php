@@ -9,7 +9,8 @@
 		$sPrice=$_POST['sp'];
 		$unit=$_POST['unit'];
 		$category=$_POST['category'];
-		$sql="insert into who_products(pro_name,buying_price,selling_price,unit,pro_cat)values('$name','$bPrice','$sPrice','$unit','$category')";
+		$quantity=$_POST['quantity'];
+		$sql="insert into who_products(pro_name,buying_price,selling_price,unit,pro_cat,quantity)values('$name','$bPrice','$sPrice','$unit','$category','$quantity')";
 		$query=mysqli_query($con,$sql);
 		if ($query) {
 			# code...
@@ -343,7 +344,7 @@
 						<li>
 							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class="uil-store"></i> <span>Products</span> </a>
 							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="manpro.php">Manage Products</a></li>
+								<li><a href="manpro.php">View Products</a></li>
 								<li><a href="pro.php">Add Products</a></li>
 								
 							</ul>
@@ -387,7 +388,7 @@
 										<div class="mb-3">
 											<label class="form-label">buying price</label>
 											<div>
-												<input type="text" class="form-control"id="wholesaler:password" name="bp" placeholder="Buying price" required/>
+												<input type="text" class="form-control"id="wholesaler:password" name="bp" placeholder="Buying price">
 												<span class="error_message"><?php// echo $buying_priceErr; ?></span>
 											</div>
 											
@@ -422,6 +423,13 @@
 												<span class="error_message"><?php// echo $categoryErr; ?></span>
 										
 											</select>
+											</div>
+										</div>
+										<div class="mb-3">
+											<label class="form-label">Quantity</label>
+											<div>
+												<input type="text" class="form-control" id="" name="quantity" placeholder=""  /> 
+												<span class="error_message"><?php// echo $selling_priceErr; ?></span>
 											</div>
 										</div>
 										
@@ -516,6 +524,7 @@
 		<script src="assets/js/pages/dashboard.init.js"></script>
 		<!-- App js -->
 		<script src="assets/js/app.js"></script>
+		
 </body>
 
 </html>

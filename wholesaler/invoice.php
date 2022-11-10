@@ -140,7 +140,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="d-flex">
+               <!--  <div class="d-flex">
                     <div class="dropdown d-inline-block d-lg-none ms-2">
                         <button type="button" class="btn header-item noti-icon waves-effect"
                             id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -161,7 +161,7 @@
                             </form>
                         </div>
                     </div>
-
+ -->
                     <div class="dropdown d-none d-lg-inline-block ms-1">
                         <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"> <i class="uil-apps"></i> </button>
@@ -316,10 +316,10 @@
         </header>
         <!-- ========== Left Sidebar Start ========== -->
         <!-- ========== Left Sidebar Start ========== -->
-		<div class="vertical-menu">
+		<div class="vertical-menu" style="background-color:black ;">
 			<!-- LOGO -->
-			<div class="navbar-brand-box">
-				
+			<div class="navbar-brand-box"style="background-color:black ;">
+				<a href="dashboard.php" ><img style="width: 60%;" src="ghj.jpg"> </a>
 			</div>
 			<button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
 			<div data-simplebar class="sidebar-menu-scroll" style="background-color:black ;">
@@ -371,7 +371,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-flex align-items-center justify-content-between">
-                                <h4 class="mb-0">wholesaler</h4>
+                                <h4 class="mb-0">Retailers</h4>
 
                                 <!-- <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
@@ -389,42 +389,48 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-
                             <div class="table-responsive mb-4">
-                                <table class="table table-centered datatable dt-responsive nowrap table-card-list"
-                                    style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                    <table class="table table-centered datatable dt-responsive nowrap table-card-list" style="border-collapse: collapse; border-spacing: 0 12px; width: 100%;">
+                                        <thead>
+                                            <tr class="bg-transparent">
+                                                <th style="width: 20px;">
+                                                    <div class="form-check text-center">
+                                                        <input type="checkbox" class="form-check-input" id="customercheck">
+                                                        <label class="form-check-label" for="customercheck"></label>
+                                                    </div>
+                                                </th>
+                                                
+                                        <th> Invoice ID </th>
+                                        <th> Retailer </th>
+                                        <th> Date </th>
+                                        <th> Order ID </th>
+                                        <th> Total Amount </th>
+                                        <th> Details </th>
+                                        <!-- <th>Action</th> -->
                                     
-                                    <thead>
-									<tr>
-										<th> Invoice ID </th>
-										<th> Retailer </th>
-										<th> Date </th>
-										<th> Order ID </th>
-										<th> Total Amount </th>
-										<th> Details </th>
-										<!-- <th>Action</th> -->
-									</tr>
-                                    </thead>
-                                    
-                                    <?php while($row_selectInvoice = mysqli_fetch_array($result_selectInvoice)) { ?>
-                                    
-                                    <tbody>                                      
-										<td> <?php echo $row_selectInvoice['invoice_id']; ?> </td>
-										<td> <?php echo $row_selectInvoice['area_code']; ?> </td>
-										
-										<td> <?php echo date("d-m-Y",strtotime($row_selectInvoice['date'])); ?> </td>
-										<td> <?php echo $row_selectInvoice['order_id']; ?> </td>
-										<td> <?php echo $row_selectInvoice['total_amount']; ?> </td>
-										<td> <a href="view_invoice_items.php?id=<?php echo $row_selectInvoice['invoice_id']; ?>">Details</a> </td>
-										<!-- <td>
-                                            <a href=""><i class='fas fa-edit' style='padding: 5px;'></i></a>
-                                            <a href=""><i class='fas fa-eye' style='padding: 5px;'></i></a>
-                                            <a href="delete_process.php?invoice_id= <?php echo $row_selectInvoice['invoice_id']; ?>"><i class='fas fa-trash' style='padding: 5px;'></i></a>
-                                        </td> -->
-                                    </tbody>
-                                    <?php } ?>
-                                </table>
-                            </div>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                             <?php while($row_selectInvoice = mysqli_fetch_array($result_selectInvoice)) { ?>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check text-center">
+                                                        <input type="checkbox" class="form-check-input" id="customercheck2">
+                                                        <label class="form-check-label" for="customercheck2"></label>
+                                                    </div>
+                                                </td>
+                                                <td> <?php echo $row_selectInvoice['invoice_id']; ?> </td>
+                                        <td> <?php echo $row_selectInvoice['area_code']; ?> </td>
+                                        
+                                        <td> <?php echo date("d-m-Y",strtotime($row_selectInvoice['date'])); ?> </td>
+                                        <td> <?php echo $row_selectInvoice['order_id']; ?> </td>
+                                        <td> <?php echo $row_selectInvoice['total_amount']; ?> </td>
+                                        <td> <a href="view_invoice_items.php?id=<?php echo $row_selectInvoice['invoice_id']; ?>">Details</a> </td>
+                                                
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                         </div>
                     </div>
                     <!-- end row -->
@@ -516,6 +522,23 @@
 
     <!-- init js -->
     <script src="assets/js/pages/ecommerce-datatables.init.js"></script>
+    <script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+      });
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+    });
+  </script>
 </body>
 
 </html>

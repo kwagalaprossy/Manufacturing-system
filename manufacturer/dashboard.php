@@ -234,17 +234,13 @@ include"config.php";
 						<li>
 							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="uil-store"></i><i class="fas fa-shopping-cart fa-3x"></i></i> <span>Distributors</span> </a>
 							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="add_product.php">Add Distributor</a></li>
-								<li><a href="view_products.php">View Distributors</a></li>
+								<li><a href="add_distributors.php">Add Distributor</a></li>
+								<li><a href="distributors.php">View Distributors</a></li>
 								
 							</ul>
 						</li>
 							
-						<li>
-							<a href="distributors.php" > <i class="uil-store"></i> <i class="fas fa-users fa-3x"></i> <span>Distributors</span> </a>
-							
-							
-						</li>
+						
 							
 						<li>
 							<a href="retailers.php" > <i class="uil-store"></i> <i class="fas fa-users fa-3x"></i> <span>Retailers</span> </a>

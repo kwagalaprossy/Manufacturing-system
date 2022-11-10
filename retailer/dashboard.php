@@ -209,28 +209,21 @@ include "config.php";
 							<a href="dashboard.php" > <i class="fas fa-dashboard"></i><span>Dashboard</span> </a>
 							
 						</li>
-						
-						
+
+
 						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"> <i class=" fas fa-users fa-3x"></i> <span>Manufacturers</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="manufacturers.php">View Manufacturers</a></li>
-								
-							</ul>
+							<a href="manufacturers.php" > <i class="fas fa-users fa-3x"></i><span>Manufacturers</span> </a>
+							
 						</li>
+						
 						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-users fa-3x"></i> <span>Distributors</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="distributors.php">View Distributors</a></li>
-								
-							</ul>
+							<a href="distributors.php" > <i class="fas fa-users fa-3x"></i><span>Distributors</span> </a>
+							
 						</li>
+						
 						<li>
-							<a href="javascript: void(0);" class="has-arrow waves-effect">  <i class="fas fa-users fa-3x"></i></i> <span>wholesalers</span> </a>
-							<ul class="sub-menu" aria-expanded="false">
-								<li><a href="wholesaler.php">View wholesalers</a></li>
-								
-							</ul>
+							<a href="wholesaler.php" > <i class="fas fa-users fa-3x"></i><span>wholesalers</span> </a>
+							
 						</li>
 						
 						<li>

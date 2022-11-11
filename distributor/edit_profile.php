@@ -1,31 +1,77 @@
 <?php
-	require("config.php");
+	include("../config.php");
+	include("../validate_data.php");
 	session_start();
-	if(isset($_SESSION['distributor_login'])) {
-		if(isset($_GET['id'])){
-			$invoice_id = $_GET['id'];
-			$queryInvoiceItems = "SELECT *,invoice_items.quantity as quantity FROM invoice,invoice_items,products WHERE invoice.invoice_id='$invoice_id' AND invoice_items.product_id=products.pro_id AND invoice_items.invoice_id=invoice.invoice_id";
-			$resultInvoiceItems = mysqli_query($con,$queryInvoiceItems);
-			$querySelectInvoice = "SELECT * FROM invoice,retailer,distributor,area WHERE invoice_id='$invoice_id' AND invoice.retailer_id=retailer.retailer_id AND retailer.area_id=area.area_id AND invoice.dist_id=distributor.dist_id";
-			$resultSelectInvoice = mysqli_query($con,$querySelectInvoice);
-			$rowSelectInvoice = mysqli_fetch_array($resultSelectInvoice);
+	if(isset($_SESSION['manufacturer_login'])) {
+		$name = $phone = $email = "";
+		$nameErr = $phoneErr = $emailErr = $requireErr = $confirmMessage = "";
+		$usernameHolder = $phoneHolder = $emailHolder = "";
+		$id = $_SESSION['manufacturer_id'];
+		$query_selectMan = "SELECT * FROM manufacturer WHERE man_id='$id'";
+		$result_selectMan = mysqli_query($con,$query_selectMan);
+		$row_selectMan = mysqli_fetch_array($result_selectMan);
+		if($_SERVER['REQUEST_METHOD'] == "POST") {
+			if(!empty($_POST['txtManufacturerName'])) {
+					$nameHolder = $_POST['txtManufacturerName'];
+					$resultValidate_name = validate_name($_POST['txtManufacturerName']);
+					if($resultValidate_name == 1) {
+						$name = $_POST['txtManufacturerName'];
+					}
+					else{
+						$nameErr = $resultValidate_name;
+					}
+				}
+				if(!empty($_POST['txtManufacturerEmail'])) {
+					$emailHolder = $_POST['txtManufacturerEmail'];
+					$resultValidate_email = validate_email($_POST['txtManufacturerEmail']);
+					if($resultValidate_email == 1) {
+						$email = $_POST['txtManufacturerEmail'];
+					}
+					else {
+						$emailErr = $resultValidate_email;
+					}
+				}
+				if(!empty($_POST['txtManufacturerPhone'])) {
+					$phoneHolder = $_POST['txtManufacturerPhone'];
+					$resultValidate_phone = validate_phone($_POST['txtManufacturerPhone']);
+					if($resultValidate_phone == 1) {
+						$phone = $_POST['txtManufacturerPhone'];
+					}
+					else {
+						$phoneErr = $resultValidate_phone;
+					}
+				}
+			if($name != null && $phone != null) {
+					$query_updateMan = "UPDATE manufacturer SET man_name='$name',man_email='$email',man_phone='$phone' WHERE man_id='$id'";
+					if(mysqli_query($con,$query_updateMan)) {
+						echo "<script> alert(\"Manufacturer Updated Successfully\"); </script>";
+						header("Refresh:0");
+					}
+					else {
+						$requireErr = "Updating Manufacturer Failed";
+					}
+				}
+				else {
+					$requireErr = "* Valid Name & Phone is compulsory";
+				}
 		}
 	}
 	else {
 		header('Location:../index.php');
 	}
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8" />
-    <title>View Invoice Details</title>
+	<title> Edit Profile </title>
+	<link rel="stylesheet" href="../includes/main_style.css" >
+	<meta charset="utf-8" />
+    <title>scm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <!-- <link rel="shortcut icon" href="assets/images/favicon.ico"> -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
     <!-- Bootstrap Css -->
     <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -34,23 +80,13 @@
     <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
     <!-- Responsive datatable examples -->
-	<script type="text/javascript">     
-        function PrintDiv() {
-			document.getElementById("signature").style.display = "block";
-			document.getElementById("footer").style.display = "block";
-			var divToPrint = document.getElementById('divToPrint');
-			var popupWin = window.open('', '_blank', '');
-			popupWin.document.open();
-			popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
-			document.getElementById("signature").style.display = "none";
-			document.getElementById("footer").style.display = "none";
-			popupWin.document.close();
-		}
-     </script>
+    <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+        type="text/css" />
 </head>
 <body>
-<div id="layout-wrapper">
+	<div id="layout-wrapper">
         <header id="page-topbar">
             <div class="navbar-header">
                 <div class="d-flex">
@@ -230,11 +266,11 @@
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img
-                                class="rounded-circle header-profile-user" src="images/ava.png" alt="Header Avatar"> <span
-                                class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Distributor</span> <i
+                                class="rounded-circle header-profile-user" src="#" alt="Header Avatar"> <span
+                                class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Manufacturer</span> <i
                                 class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
                         <div class="dropdown-menu dropdown-menu-end">
-                            <!-- item--><a class="dropdown-item" href="edit_profile.php"><i
+                            <!-- item--><a class="dropdown-item" href="#"><i
                                     class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span
                                     class="align-middle">View Profile</span></a>  <a class="dropdown-item" href="logout.php"><i
                                     class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span
@@ -248,114 +284,94 @@
                 </div>
             </div>
         </header>
-		<!-- ========== Left Sidebar Start ========== -->
-		<div class="vertical-menu" style="background-color:black;">
-			<!-- LOGO -->
-			<div class="navbar-brand-box" style="background-color:black;">
-				<a href="dashboard.php" ><img style="width: 60%;" src="ghj.jpg"> </a>
-				<!-- <h3> M&DS</h3> -->
-			</div>
-			<button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
-			<div data-simplebar class="sidebar-menu-scroll" style="background-color:black;">
-				<!--- Sidemenu -->
-				<div id="sidebar-menu" >
-					<!-- Left Menu Start -->
-			
-					<ul class="metismenu list-unstyled" id="side-menu">
-						
-					
-						<li>
-							<a href="dashboard.php" > <i class="fas fa-dashboard"></i><span>Dashboard</span> </a>
-							
-						</li>
-						
-						<li>
-							<a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>Products</span> </a>
-							
-						</li>
-
-						<li>
-							<a href="orders.php" ><i class="fas fa-shopping-cart fa-3x"></i> <span>Orders</span> </a>
-							
-						</li>
-						<li>
-							<a href="invoice.php" > <i class="fas fa-file-invoice fa-3x"></i><span>Invoices</span> </a>
-							
-						</li>
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="vertical-menu" style="background-color:black ;">
+            <!-- LOGO -->
+            <div class="navbar-brand-box" style="background-color:black ;">
+                <a href="dashboard.php" ><img style="width: 60%;" src="ghj.jpg"> </a>
+                <!-- <h3> M&DS</h3> -->
+            </div>
+            <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect vertical-menu-btn"> <i class="fa fa-fw fa-bars"></i> </button>
+            <div data-simplebar class="sidebar-menu-scroll" style="background-color:black;">
+                <!--- Sidemenu -->
+                <div id="sidebar-menu" >
+                    <!-- Left Menu Start -->
+            
+                    <ul class="metismenu list-unstyled" id="side-menu">
+                        
+                    
                         <li>
-							<a href="expense.php" > <i class="fas fa-file-invoice fa-3x"></i><span>Expenses</span> </a>
-							
-						</li>
-						
-			
-				</div>
-				<!-- Sidebar -->
-			</div>
-		</div>
-		<!-- Left Sidebar End -->
-		<div class="main-content">
+                            <a href="dashboard.php" > <i class="fas fa-dashboard"></i><span>Dashboard</span> </a>
+                            
+                        </li>
+                        
+                        <li>
+                            <a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>products</span> </a>
+                            
+                        </li>
+
+                        <li>
+                            <a href="orders.php" ><i class="fas fa-shopping-cart fa-3x"></i> <span>Orders</span> </a>
+                            
+                        </li>
+                        <li>
+                            <a href="invoice.php" > <i class="fas fa-file-invoice fa-3x"></i><span>Invoices</span> </a>
+                            
+                        </li>
+                        <li>
+                            <a href="expense.php" > <i class="fas fa-file-invoice fa-3x"></i><span>Expenses</span> </a>
+                            
+                        </li>
+                    
+                </div>
+                <!-- Sidebar -->
+            </div>
+        </div>
+        <!-- Left Sidebar End -->
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
             <div class="page-content">
                 <div class="container-fluid">
-					<section>
-						<div id="divToPrint" style="clear:both;" >
-						<h1 style="text-align:center; padding: bottom 20px;">Sales Invoice</h1>
-						<table class="table_infoFormat" >
-							<tr>
-								<td><b> Invoice No: </b></td>
-								<td> <?php echo $rowSelectInvoice['invoice_id']; ?> </td>
-							</tr>
-							<tr>
-								<td><b> Order No: </b></td>
-								<td> <?php echo $rowSelectInvoice['order_id']; ?> </td>
-							</tr>
-							<tr>
-								<td><b> Retailer: </b></td>
-								<td> <?php echo $rowSelectInvoice['area_code']; ?> </td>
-							</tr>
-							<tr>
-								<td><b> Distributor: </b></td>
-								<td> <?php echo $rowSelectInvoice['dist_name']; ?> </td>
-							</tr>
-							<tr>
-								<td><b> Date: </b></td>
-								<td> <?php echo date("d-m-Y",strtotime($rowSelectInvoice['date'])); ?> </td>
-							</tr>
-							</table>
-							<form action="" method="POST" class="form">
-							<table class="table_invoiceFormat" style="margin-top:50px;">
-								<tr style="background-color:aqua;">
-									<th style="padding-right:25px;"> Sr. No.</th>
-									<th style="padding-right:150px;"> Products </th>
-									<th style="padding-right:30px;"> Unit Price </th>
-									<th style="padding-right:30px;"> Quantity </th>
-									<th> Amount </th>
-								</tr>
-								<?php $i=1; while($rowInvoiceItems = mysqli_fetch_array($resultInvoiceItems)) { ?>
-								<tr>
-									<td> <?php echo $i; ?> </td>
-									<td> <?php echo $rowInvoiceItems['pro_name']; ?> </td>
-									<td> <?php echo $rowInvoiceItems['pro_price']; ?> </td>
-									<td> <?php echo $rowInvoiceItems['quantity']; ?> </td>
-									<td> <?php echo $rowInvoiceItems['quantity']*$rowInvoiceItems['pro_price']; ?> </td>
-								</tr>
-								<?php $i++; } ?>
-								<tr style="height:40px;vertical-align:bottom;">
-									<td colspan="4" style="text-align:right;"><b> Grand Total: </b></td>
-									<td>
-									<?php
-										mysqli_data_seek($resultInvoiceItems,0);
-										$rowInvoiceItems = mysqli_fetch_array($resultInvoiceItems);
-										echo $rowInvoiceItems['total_amount'];
-									?>
-									</td>
-								</tr>
-							</table><br/><br/>
-		<b>Comments:</b> <br/> <?php echo $rowSelectInvoice['comments']; ?>
-		<br/><br/><br/><br/><br/><br/>
-			<p id="signature" style="float:right;display:none;">(Authorized Signatory)</p>
-			<p id="footer" style="clear:both;display:none;padding-bottom:20px;text-align:center;">Thank you for your Bussiness!</p>
-		</div>
-		<input type="button" value="Print Invoice" class="submit_button" onclick="PrintDiv();" />
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-flex align-items-center justify-content-between">
+                                
+                                <!-- <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Invoices</a></li>
+                                        <li class="breadcrumb-item active">Retailers</li>
+                                    </ol>
+                                </div> -->
+
+                            </div>
+                        </div>
+                    </div>
+	
+	<section>
+		<h1>Edit Profile</h1>
+		<form action="" method="POST" class="form">
+		<ul class="form-list">
+		<li>
+			<div class="label-block"> <label for="manufacturer:name">Name</label> </div>
+			<div class="input-box"> <input type="text" id="manufacturer:name" name="txtManufacturerName" placeholder="Name" value="<?php echo $row_selectMan['man_name']; ?>" required /> </div> <span class="error_message"><?php echo $nameErr; ?></span>
+		</li>
+		<li>
+			<div class="label-block"> <label for="manufacturer:email">Email</label> </div>
+			<div class="input-box"> <input type="text" id="manufacturer:email" name="txtManufacturerEmail" placeholder="Email" value="<?php echo $row_selectMan['man_email']; ?>" required /> </div> <span class="error_message"><?php echo $emailErr; ?></span>
+		</li>
+		<li>
+			<div class="label-block"> <label for="manufacturer:phone">Phone</label> </div>
+			<div class="input-box"> <input type="text" id="manufacturer:phone" name="txtManufacturerPhone" placeholder="Phone" value="<?php echo $row_selectMan['man_phone']; ?>" /> </div> <span class="error_message"><?php echo $phoneErr; ?></span>
+		</li>
+		<li>
+			<a href="change_password.php"><input type="button" value="Change Password" class="submit_button" /></a>
+			<input type="submit" value="Update Profile" class="submit_button" /> <span class="error_message"> <?php echo $requireErr; ?> </span><span class="confirm_message"> <?php echo $confirmMessage; ?> </span>
+		</li>
+		</ul>
 		</form>
 	</section>
 	

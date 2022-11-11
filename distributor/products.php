@@ -148,7 +148,7 @@
 										<div class="flex-grow-1">
 											<h6 class="mb-1">Your order is placed</h6>
 											<div class="font-size-12 text-muted">
-												<p class="mb-1">If several languages coalesce the grammar</p>
+												<p class="mb-1">You will receive it</p>
 												<p class="mb-0"><i class="mdi mdi-clock-outline"></i> 3 min ago</p>
 											</div>
 										</div>
@@ -158,9 +158,9 @@
 									<div class="d-flex align-items-start">
 										<div class="flex-shrink-0 me-3"> <img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-xs" alt="user-pic"> </div>
 										<div class="flex-grow-1">
-											<h6 class="mb-1">James Lemire</h6>
+											<h6 class="mb-1">Praise</h6>
 											<div class="font-size-12 text-muted">
-												<p class="mb-1">It will seem like simplified English.</p>
+												<p class="mb-1">Hope you enjoy our services</p>
 												<p class="mb-0"><i class="mdi mdi-clock-outline"></i> 1 hours ago</p>
 											</div>
 										</div>
@@ -205,7 +205,7 @@
 					<div class="dropdown d-inline-block">
 						<button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <img class="rounded-circle header-profile-user" src="#" alt="Header Avatar"> <span class="d-none d-xl-inline-block ms-1 fw-medium font-size-15">Distributor</span> <i class="uil-angle-down d-none d-xl-inline-block font-size-15"></i> </button>
 						<div class="dropdown-menu dropdown-menu-end">
-							<!-- item--><a class="dropdown-item" href="#"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">View Profile</span></a> <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">My Wallet</span></a> <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Settings</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a> <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Lock screen</span></a> <a class="dropdown-item" href="#"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a> </div>
+							<!-- item--><a class="dropdown-item" href="edit_profile.php"><i class="uil uil-user-circle font-size-18 align-middle text-muted me-1"></i> <span class="align-middle">View Profile</span></a> <a class="dropdown-item" href="#"><i class="uil uil-wallet font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">My Wallet</span></a> <a class="dropdown-item d-block" href="#"><i class="uil uil-cog font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Settings</span> <span class="badge bg-soft-success rounded-pill mt-1 ms-2">03</span></a> <a class="dropdown-item" href="#"><i class="uil uil-lock-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Lock screen</span></a> <a class="dropdown-item" href="#"><i class="uil uil-sign-out-alt font-size-18 align-middle me-1 text-muted"></i> <span class="align-middle">Sign out</span></a> </div>
 					</div>
 					<div class="dropdown d-inline-block">
 						<button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect"> <i class="uil-cog"></i> </button>
@@ -234,7 +234,7 @@
 							
 						</li>
 						<li>
-							<a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>products</span> </a>
+							<a href="products.php" ><i class="fa-brands fa-product-hunt fa-3x"></i> <span>Products</span> </a>
 							
 						</li>
 				

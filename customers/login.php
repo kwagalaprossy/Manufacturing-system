@@ -3,7 +3,7 @@
 session_start();
 
 	include("connection.php");
-	include("functions.php");
+	// include("functions.php");
 	
 	if($_SERVER['REQUEST_METHOD'] == "POST")
 	{
@@ -15,7 +15,7 @@ session_start();
 		if (!empty($user_name) && !empty($password) && !is_numeric($user_name)) {
 
 			
-			$query = "select * from users where user_name = '$user_name' limit 1";
+			$query = "select * from customer details where user_name = '$user_name' limit 1";
 
 			$result = mysqli_query($con, $query);
 			if($result) {

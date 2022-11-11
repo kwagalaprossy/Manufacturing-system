@@ -1,12 +1,14 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "sacco";
+$conn_error='Could not Connect.';
+$mysql_host='localhost';
+$mysql_user='root';
+$mysql_pass='';
+$mysql_db='datawarehouse';
 
-if(!$con = mysqli_connect($servername,$username,$password,$dbname)){
-	die("failed to connect!");
+$con=mysqli_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db);
+// Check connection
+if (mysqli_connect_errno()){
+	echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
-
-
+	
 ?>

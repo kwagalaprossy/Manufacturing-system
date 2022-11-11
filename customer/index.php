@@ -25,11 +25,7 @@
 	<link rel="stylesheet" href="../includes/main_style.css" >
 </head>
 <body>
-	<?php
-		include("../includes/header.inc.php");
-		include("../includes/nav_customer.inc.php");
-		include("../includes/aside_customer.inc.php");
-	?>
+	
 	<section>
 		Welcome <?php echo $_SESSION['sessUsername']; ?>
 		<article>
